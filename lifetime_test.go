@@ -4,12 +4,14 @@ import (
 	"context"
 	"fmt"
 	"github.com/tomwright/lifetime"
+	"sync"
 	"time"
 )
 
 type testService struct {
 	name             string
 	stop             bool
+	stopMu           sync.RWMutex
 	startupDuration  time.Duration
 	shutdownDuration time.Duration
 }
@@ -17,13 +19,21 @@ type testService struct {
 func (s *testService) Start() error {
 	time.Sleep(s.startupDuration)
 	fmt.Printf("%s: Started\n", s.name)
-	for s.stop == false {
+	for {
+		s.stopMu.RLock()
+		if s.stop {
+			s.stopMu.RUnlock()
+			break
+		}
+		s.stopMu.RUnlock()
 		time.Sleep(time.Millisecond * 10)
 	}
 	return nil
 }
 
 func (s *testService) Stop() {
+	s.stopMu.Lock()
+	defer s.stopMu.Unlock()
 	time.Sleep(s.shutdownDuration)
 	fmt.Printf("%s: Stopped\n", s.name)
 	s.stop = true
