@@ -3,6 +3,7 @@ package lifetime
 import (
 	"context"
 	"errors"
+	"log"
 	"os"
 	"os/signal"
 	"sync"
@@ -140,6 +141,8 @@ func (lifetime *Lifetime) handleErrors() {
 			if err == ErrImmediateShutdownSignalReceived {
 				os.Exit(1)
 			}
+
+			log.Printf("lifetime error received: %s", err.Error())
 
 			lifetime.Shutdown()
 		}
