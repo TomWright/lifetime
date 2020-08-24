@@ -1,6 +1,8 @@
 package lifetime
 
-import "net/http"
+import (
+	"net/http"
+)
 
 // NewHTTPService returns a service that will run listen and serve the given
 // HTTP server.

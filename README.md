@@ -95,4 +95,14 @@ lt.Start(service)
 
 #### GRPC Server
 
-Coming soon...
+```
+// Create and register GRPC server.
+var server *grpc.Server
+// Register GRPC server implementation...
+
+// Create GRPC service, giving it the GRPC server and a listen address.
+service := lifetime.NewGRPCService(server, ":9000")
+
+// Start the service.
+lt.Start(service)
+```
