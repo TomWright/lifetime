@@ -8,6 +8,12 @@ Lifetime is a basic package to help you manage the lifetime of an application wi
 
 The main benefit of this module is that it allows you to easily manage graceful shutdowns without most of the boilerplate code that goes along with it.
 
+## Deprecated
+
+Please note that I am deprecating this package in favour of [grace](https://github.com/TomWright/grace).
+
+Grace has a simplified API and is split across different modules to reduce the number of forced dependencies.
+
 ## Installation
 ```
 go get github.com/tomwright/lifetime
